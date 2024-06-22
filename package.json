@@ -5,22 +5,27 @@
   "license": "MIT",
   "scripts": {
     "watch": "tsc -w",
-    "dev": "nodemon --inspect dist/main.js"
+    "dev": "nodemon --inspect dist/main.js",
+    "test": "jest -i --detectOpenHandles --forceExit"
   },
   "dependencies": {
+    "@types/chai": "^4.3.16",
     "@types/file-type": "^10.9.1",
     "@types/node": "^20.14.6",
     "body-parser": "^1.20.2",
+    "chai": "^5.1.1",
     "express": "^4.19.2",
     "file-type": "^19.0.0",
     "multer": "^1.4.5-lts.1",
     "natural": "^7.0.6",
     "nodemon": "^3.1.4",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
     "@types/express": "^4.17.21",
-    "@types/multer": "^1.4.11"
+    "@types/multer": "^1.4.11",
+    "jest": "^29.7.0",
+    "ts-node": "^10.9.2"
   }
 }
