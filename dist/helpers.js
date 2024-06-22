@@ -99,13 +99,26 @@ const isTextFile = (data) => {
 };
 exports.isTextFile = isTextFile;
 // export const calculateSimilarity = (text1: string, text2: string): number => {
-//     const words1: Set<string> = new Set(text1.split(' '));
-//     const words2: Set<string> = new Set(text2.split(' '));
+//     const tfidf = new natural.TfIdf();
 //
-//     const intersection: Set<string> = new Set([...words1].filter((word) => words2.has(word)));
-//     const union: Set<string> = new Set([...words1, ...words2]);
+//     tfidf.addDocument(text1);
+//     tfidf.addDocument(text2);
 //
-//     const similarityScore: number = intersection.size / union.size;
+//     let similarityScore: number = 0;
+//
+//     const terms1: string[] = tfidf.listTerms(0).map(term => term.term);
+//     const terms2: string[] = tfidf.listTerms(1).map(term => term.term);
+//
+//     terms1.forEach((term) => {
+//         const tfidf1 = tfidf.tfidf(term, 0);
+//         const tfidf2 = tfidf.tfidf(term, 1);
+//         similarityScore += tfidf1 * tfidf2;
+//     });
+//
+//     const magnitude1 = Math.sqrt(terms1.reduce((acc, term) => acc + Math.pow(tfidf.tfidf(term, 0), 2), 0));
+//     const magnitude2 = Math.sqrt(terms2.reduce((acc, term) => acc + Math.pow(tfidf.tfidf(term, 1), 2), 0));
+//
+//     similarityScore /= (magnitude1 * magnitude2);
 //
 //     return similarityScore;
 // };
@@ -116,13 +129,19 @@ const calculateSimilarity = (text1, text2) => {
     let similarityScore = 0;
     const terms1 = tfidf.listTerms(0).map(term => term.term);
     const terms2 = tfidf.listTerms(1).map(term => term.term);
+    if (terms1.length === 0 || terms2.length === 0) {
+        return 0;
+    }
     terms1.forEach((term) => {
-        const tfidf1 = tfidf.tfidf(term, 0);
-        const tfidf2 = tfidf.tfidf(term, 1);
+        const tfidf1 = tfidf.tfidf(term, 0) || 0;
+        const tfidf2 = tfidf.tfidf(term, 1) || 0;
         similarityScore += tfidf1 * tfidf2;
     });
-    const magnitude1 = Math.sqrt(terms1.reduce((acc, term) => acc + Math.pow(tfidf.tfidf(term, 0), 2), 0));
-    const magnitude2 = Math.sqrt(terms2.reduce((acc, term) => acc + Math.pow(tfidf.tfidf(term, 1), 2), 0));
+    const magnitude1 = Math.sqrt(terms1.reduce((acc, term) => acc + Math.pow(tfidf.tfidf(term, 0) || 0, 2), 0));
+    const magnitude2 = Math.sqrt(terms2.reduce((acc, term) => acc + Math.pow(tfidf.tfidf(term, 1) || 0, 2), 0));
+    if (magnitude1 === 0 || magnitude2 === 0) {
+        return 0;
+    }
     similarityScore /= (magnitude1 * magnitude2);
     return similarityScore;
 };
