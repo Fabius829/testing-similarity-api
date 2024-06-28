@@ -21,49 +21,6 @@ const port = 3000
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-// app.all('/', upload.fields([{ name: 'file1' }, { name: 'file2' }]), async (req: Request & { files: { file1: Express.Multer.File[], file2: Express.Multer.File[] } }, res: Response) => {
-//     if (req.method === 'GET') {
-//         res.send(FormPage());
-//     } else if (req.method === 'POST') {
-//         const { text } = req.body;
-//         const file1Buffer = (req.files['file1'][0] as Express.Multer.File).buffer;
-//         const file2Buffer = (req.files['file2'][0] as Express.Multer.File).buffer;
-//
-//         if (!text || !file1Buffer || !file2Buffer) {
-//             return res.send(
-//                 `<h1>Error: Missing fields</h1>
-//             ${FormPage()}`
-//         );
-//         }
-//
-//         const file1Base64 = file1Buffer.toString('base64');
-//         const file2Base64 = file2Buffer.toString('base64');
-//
-//         if (!isTextFile(file1Base64.toString()) || !isTextFile(file2Base64.toString())) {
-//             return res.send(
-//                 `<h1>Error: Files are not text files</h1>
-//             ${FormPage()}`
-//         );
-//         }
-//
-//         const textFromFile1 = Buffer.from(file1Base64, 'base64').toString('utf-8');
-//         const textFromFile2 = Buffer.from(file2Base64, 'base64').toString('utf-8');
-//
-//         const similarityScore = calculateSimilarity(textFromFile1, textFromFile2);
-//
-//         const resultText = `Для запроса "${text}" сходство (расстояние) равно ${similarityScore}`;
-//
-//         try {
-//             await fs.promises.writeFile('Ответ на запрос.txt', resultText);
-//             res.download('Ответ на запрос.txt');
-//         } catch (err) {
-//             console.error(err);
-//             res.status(500).send('Error saving the file');
-//         }
-//     } else {
-//         res.status(405).send('Method Not Allowed');
-//     }
-// });
 
 app.all('/', upload.fields([{ name: 'file1' }, { name: 'file2' }]),
     async (req: Request & { files: { file1: Express.Multer.File[], file2: Express.Multer.File[] } }, res: Response) => {
@@ -71,23 +28,10 @@ app.all('/', upload.fields([{ name: 'file1' }, { name: 'file2' }]),
         res.send(FormPage());
     } else if (req.method === 'POST') {
         const { text } = req.body;
-        // const file1Buffer = (req.files['file1'][0] as Express.Multer.File).buffer;
-        // const file2Buffer = (req.files['file2'][0] as Express.Multer.File).buffer;
+
         const file1 = req.files['file1'];
         const file2 = req.files['file2'];
 
-        // if (!text || !file1Buffer || !file2Buffer) {
-        //     return res.send(
-        //         `<h1>Error: Missing fields</h1>
-        //     ${FormPage()}`
-        // );
-        // }
-        // if (!text || !file1Buffer || !file2Buffer) {
-        //     return res.send(
-        //         `${FormPage()}
-        //         <h1>Error: Missing fields</h1>`
-        // );
-        // }
         if (!text || !file1 || !file1[0] || !file1[0].buffer || !file2 || !file2[0] || !file2[0].buffer) {
             return res.send(
                 `<div style="display: flex; flex-direction: column; align-items: center;">

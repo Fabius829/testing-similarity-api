@@ -142,3 +142,92 @@
 //     });
 // });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// describe('POST /yourEndpoint', () => {
+//     test('should return error message for missing fields', async () => {
+//         const response = await request(app)
+//             .post('/yourEndpoint')
+//             .field('text', 'Example text')
+//             .attach('file1', 'path/to/emptyFile.txt')
+//             .attach('file2', 'path/to/nonEmptyFile.txt');
+//
+//         expect(response.status).toBe(200);
+//         expect(response.text).toContain('Error: Missing fields');
+//     });
+//
+//     test('should calculate similarity and return result', async () => {
+//         const response = await request(app)
+//             .post('/yourEndpoint')
+//             .field('text', 'Example text')
+//             .attach('file1', 'path/to/textFile1.txt')
+//             .attach('file2', 'path/to/textFile2.txt');
+//
+//         expect(response.status).toBe(200);
+//         expect(response.text).not.toContain('Error: Missing fields');
+//         expect(response.text).toContain('сходство (расстояние) равно');
+//     });
+//
+//     test('should save result to file and download it', async () => {
+//         const response = await request(app)
+//             .post('/yourEndpoint')
+//             .field('text', 'Example text')
+//             .attach('file1', 'path/to/textFile1.txt')
+//             .attach('file2', 'path/to/textFile2.txt');
+//
+//         expect(response.status).toBe(200);
+//
+//         // Проверяем, что файл был сохранен и можно его скачать
+//         const fileExists = fs.existsSync('Ответ на запрос.txt');
+//         expect(fileExists).toBe(true);
+//     });
+// });
+
+
+// describe('POST /api', () => {
+//     test('should return error message for missing fields', async () => {
+//         const response = await request(app)
+//             .post('/api')
+//             .send({});
+//
+//         expect(response.status).toBe(400);
+//         expect(response.body).toHaveProperty('error', 'Отсутствуют необходимые поля');
+//     });
+//
+//     test('should return error message for non-text files', async () => {
+//         const response = await request(app)
+//             .post('/api')
+//             .send({
+//                 text: 'Example text',
+//                 file1: 'base64encodedfile1',
+//                 file2: 'base64encodedfile2'
+//             });
+//
+//         expect(response.status).toBe(400);
+//         expect(response.body).toHaveProperty('error', 'Один или оба файла не являются текстовыми');
+//     });
+//
+//     test('should calculate similarity and return result', async () => {
+//         const response = await request(app)
+//             .post('/api')
+//             .send({
+//                 text: 'Example text',
+//                 file1: 'base64encodedfile1',
+//                 file2: 'base64encodedfile2'
+//             });
+//
+//         expect(response.status).toBe(200);
+//         expect(response.body).toHaveProperty('text', 'Example text');
+//         expect(response.body).toHaveProperty('similarity');
+//         expect(response.body).toHaveProperty('result');
+//     });
+//
+//     test('should handle invalid method', async () => {
+//         const response = await request(app)
+//             .get('/api');
+//
+//         expect(response.status).toBe(405);
+//         expect(response.text).toBe('Method Not Allowed');
+//     });
+// });
